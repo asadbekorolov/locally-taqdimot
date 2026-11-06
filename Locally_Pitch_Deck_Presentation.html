@@ -1,0 +1,1602 @@
+<!DOCTYPE html>
+<html lang="uz" class="h-full overflow-hidden select-none">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Locally — Professional Web Pitch Deck Presentation</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream: '#FFFDF9',
+            'cream-surface': '#F9F6F0',
+            terracotta: '#C85A32',
+            'terracotta-hover': '#B04B26',
+            'terracotta-light': '#FDF4F0',
+            espresso: '#2D231E',
+            'espresso-muted': '#6B5E55',
+            'espresso-dark': '#1C1512',
+            taupe: '#EFE9E1',
+            'taupe-dark': '#DDD5CA'
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['"Playfair Display"', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Strictly disable any page scroll */
+    html, body {
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+      background-color: #1a1412;
+      color: #2D231E;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* 16:9 Aspect Ratio Master Container */
+    .deck-stage {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .slide-viewport {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      max-width: calc(100vh * (16 / 9));
+      max-height: calc(100vw * (9 / 16));
+      aspect-ratio: 16 / 9;
+      background-color: #FFFDF9;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Slide transition animations */
+    .slide-card {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.97) translateY(12px);
+      transition: opacity 350ms cubic-bezier(0.16, 1, 0.3, 1), transform 350ms cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      background-color: #FFFDF9;
+      padding: 4rem 3.2rem 3.5rem 3.2rem;
+      overflow: hidden;
+    }
+
+    .slide-card.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: scale(1) translateY(0);
+      z-index: 10;
+    }
+
+    /* Soft Glow Background for Highlights */
+    .hero-glow {
+      background: radial-gradient(circle at 50% 30%, rgba(200, 90, 50, 0.12) 0%, rgba(255, 253, 249, 0) 70%);
+    }
+
+    /* Custom Scrollbar for miniature UI if needed */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* Phone screenshot frames on slide 5 */
+    .phone-mockup {
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+    }
+    .phone-mockup:hover {
+      transform: translateY(-4px) scale(1.03);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</head>
+<body class="flex flex-col h-full bg-espresso-dark text-espresso font-sans">
+
+  <!-- ================= TOP GLOBAL PRESENTATION TOOLBAR ================= -->
+  <header class="h-12 w-full bg-[#201815] border-b border-[#352924] px-4 flex items-center justify-between z-50 shrink-0 text-white text-xs select-none">
+    
+    <!-- Left: Brand info -->
+    <div class="flex items-center space-x-3">
+      <div class="w-7 h-7 rounded-lg bg-terracotta flex items-center justify-center text-white font-extrabold text-sm shadow-md">
+        L
+      </div>
+      <div>
+        <span class="font-bold tracking-tight text-white flex items-center gap-1.5">
+          Locally
+          <span class="text-[10px] text-terracotta bg-terracotta/20 px-1.5 py-0.5 rounded font-mono font-semibold uppercase tracking-wider">Deck</span>
+        </span>
+      </div>
+      <div class="hidden md:flex items-center text-[#9A8C82] text-[11px] pl-2 border-l border-[#352924]">
+        <span>Sequoia Capital Formati</span>
+      </div>
+    </div>
+
+    <!-- Center: Interactive Progress Dots -->
+    <div class="flex items-center space-x-2 bg-[#17110F] py-1 px-3 rounded-full border border-[#302521]">
+      <div class="flex items-center space-x-1.5" id="dots-container">
+        <!-- 10 dots injected by JS -->
+      </div>
+      <div class="text-[11px] font-mono text-[#A8988D] pl-2 border-l border-[#352924] min-w-[45px] text-right font-medium">
+        <span id="current-slide-num" class="text-terracotta font-bold">1</span>/<span id="total-slide-num">10</span>
+      </div>
+    </div>
+
+    <!-- Right: Controls (Timer, Speaker Notes, Fullscreen, Bot Link) -->
+    <div class="flex items-center space-x-2">
+      <!-- Live Pitch Timer -->
+      <div class="flex items-center space-x-1 bg-[#17110F] px-2.5 py-1 rounded-lg border border-[#302521] text-[11px] font-mono">
+        <i data-lucide="clock" class="w-3.5 h-3.5 text-terracotta"></i>
+        <span id="timer-display" class="text-white font-semibold">00:00</span>
+        <button id="timer-toggle-btn" title="Taymerni to'xtatish / boshlash" class="ml-1 text-[#8F7F75] hover:text-white transition">
+          <i data-lucide="pause" class="w-3 h-3" id="timer-icon"></i>
+        </button>
+        <button id="timer-reset-btn" title="Taymerni 00:00 ga qaytarish" class="text-[#8F7F75] hover:text-white transition">
+          <i data-lucide="rotate-ccw" class="w-3 h-3"></i>
+        </button>
+      </div>
+
+      <!-- Speaker Notes Toggle [N] -->
+      <button id="notes-btn" title="Spiker nutq paneli (N)" class="flex items-center space-x-1 px-2.5 py-1 rounded-lg bg-[#2A1F1B] hover:bg-[#382B25] text-[#D8CCC4] hover:text-white border border-[#3D2E28] transition">
+        <i data-lucide="file-text" class="w-3.5 h-3.5 text-terracotta"></i>
+        <span class="hidden sm:inline">Nutq</span>
+        <kbd class="text-[9px] bg-[#1a1310] px-1 py-0.5 rounded text-[#A09085] font-mono">N</kbd>
+      </button>
+
+      <!-- Fullscreen Toggle [F] -->
+      <button id="fullscreen-btn" title="To'liq ekran rejimi (F)" class="flex items-center space-x-1 px-2.5 py-1 rounded-lg bg-[#2A1F1B] hover:bg-[#382B25] text-[#D8CCC4] hover:text-white border border-[#3D2E28] transition">
+        <i data-lucide="maximize" class="w-3.5 h-3.5" id="fs-icon"></i>
+        <kbd class="text-[9px] bg-[#1a1310] px-1 py-0.5 rounded text-[#A09085] font-mono">F</kbd>
+      </button>
+
+      <!-- Rasmiy Telegram Bot havolasi -->
+      <a href="https://t.me/locally_marketplace_bot" target="_blank" title="Telegramda ochish: @locally_marketplace_bot" class="flex items-center space-x-1.5 px-3 py-1 rounded-lg bg-terracotta hover:bg-terracotta-hover text-white font-bold transition shadow-sm">
+        <i data-lucide="send" class="w-3.5 h-3.5"></i>
+        <span>Jonli Mini App</span>
+        <i data-lucide="external-link" class="w-3 h-3 opacity-80"></i>
+      </a>
+    </div>
+  </header>
+
+  <!-- ================= MASTER DECK STAGE (16:9 VIEWPORT) ================= -->
+  <main class="deck-stage flex-1 overflow-hidden p-2 sm:p-4 md:p-6 lg:p-8">
+    <div id="slide-viewport" class="slide-viewport rounded-2xl md:rounded-3xl border border-[#3D2E28]/40">
+
+      <!-- ================= SLIDE 1: TITLE & HOOK ================= -->
+      <section class="slide-card hero-glow active" data-slide="1" data-title="Title & Hook">
+        <div class="flex items-center justify-between mb-4">
+          <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-terracotta-light border border-terracotta/25 text-terracotta text-xs font-bold">
+            <span class="w-2 h-2 rounded-full bg-terracotta animate-pulse"></span>
+            <span>Sequoia Capital Formati • Pitch Deck 2026</span>
+          </div>
+          <span class="text-xs font-mono font-bold text-terracotta tracking-wider uppercase">01 / 10 • Kirish</span>
+        </div>
+
+        <div class="my-auto flex flex-col justify-center">
+          <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-espresso font-serif tracking-tight leading-[1.12] mb-4">
+            Uy taomlari, qo‘l mehnati va <br />
+            <span class="text-terracotta italic font-normal">mahalliy mahsulotlar</span> bozori.
+          </h1>
+
+          <p class="text-sm sm:text-lg text-espresso-muted max-w-3xl font-normal leading-relaxed mb-8">
+            O‘zbekistondagi 30M+ faol Telegram foydalanuvchilarini uy bekalari, pazandalar va mahalliy hunarmandlar bilan 0 MB yuklab olishlarsiz, to‘g‘ridan-to‘g‘ri bog‘laydigan Mini App platformasi.
+          </p>
+
+          <!-- 4 Core Metric Highlight Badges -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t border-taupe">
+            <div class="p-3.5 rounded-2xl bg-cream-surface border border-taupe/80 shadow-xs">
+              <span class="text-[11px] text-espresso-muted font-medium block">Auditoriya</span>
+              <span class="text-2xl sm:text-3xl font-extrabold text-espresso tracking-tight">30M+</span>
+              <span class="text-[11px] text-espresso-muted block mt-0.5">Telegram O‘zbekiston</span>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-terracotta-light border border-terracotta/30 shadow-xs">
+              <span class="text-[11px] text-terracotta font-medium block">O‘rnatish hajmi</span>
+              <span class="text-2xl sm:text-3xl font-extrabold text-terracotta tracking-tight">0 MB</span>
+              <span class="text-[11px] text-espresso-muted block mt-0.5">Tezkor Mini App</span>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-cream-surface border border-taupe/80 shadow-xs">
+              <span class="text-[11px] text-espresso-muted font-medium block">Xarid tezligi</span>
+              <span class="text-2xl sm:text-3xl font-extrabold text-espresso tracking-tight">3 bosqich</span>
+              <span class="text-[11px] text-espresso-muted block mt-0.5">Savatchadan to‘lovgacha</span>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-cream-surface border border-taupe/80 shadow-xs">
+              <span class="text-[11px] text-espresso-muted font-medium block">Sotuvchi to‘lovi</span>
+              <span class="text-2xl sm:text-3xl font-extrabold text-terracotta tracking-tight">0 so‘m</span>
+              <span class="text-[11px] text-espresso-muted block mt-0.5">Faqat savdodan 10%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-auto pt-3 flex items-center justify-between text-xs text-espresso-muted border-t border-taupe/60">
+          <div class="flex items-center space-x-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span>Rasmiy Bot: <strong>@locally_marketplace_bot</strong></span>
+          </div>
+          <span class="italic">Locally • «Mahalliy lazzat, xonadon mehr-u mehnati»</span>
+        </div>
+      </section>
+
+      <!-- ================= SLIDE 2: THE PROBLEM ================= -->
+      <section class="slide-card bg-cream-surface" data-slide="2" data-title="The Problem">
+        <div class="flex items-center justify-between mb-3">
+          <div class="inline-flex items-center space-x-2">
+            <span class="text-xs uppercase tracking-wider text-terracotta font-extrabold">01 • Muammo</span>
+            <span class="text-taupe-dark">|</span>
+            <span class="text-xs text-espresso-muted">Customer Discovery & Mom Test</span>
+          </div>
+          <span class="text-xs font-mono font-bold text-terracotta">02 / 10</span>
+        </div>
+
+        <div class="mb-4">
+          <h2 class="text-2xl sm:text-4xl font-extrabold text-espresso font-serif tracking-tight">
+            Mahsulot zo‘r, lekin uni sotish azob.
+          </h2>
+          <p class="text-espresso-muted text-xs sm:text-sm mt-1 max-w-3xl">
+            20 dan ortiq uy bekalari, qandolatchilar va hunarmandlar bilan o‘tkazilgan «Mom Test» suhbatlari natijasida 3 ta halokatli og‘riq aniqlandi:
+          </p>
+        </div>
+
+        <!-- 3 Problem Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-auto">
+          <div class="p-4 sm:p-5 rounded-2xl bg-cream border border-taupe flex flex-col justify-between shadow-xs">
+            <div>
+              <div class="w-10 h-10 rounded-xl bg-red-100 text-red-600 flex items-center justify-center mb-3">
+                <i data-lucide="users-round" class="w-5 h-5"></i>
+              </div>
+              <h3 class="text-base font-bold text-espresso mb-1.5">1. Xaridor topish cheklangan</h3>
+              <p class="text-xs text-espresso-muted leading-relaxed">
+                Taom va buyumlar faqat qarindoshlar, qo‘shnilar yoki tor doiradagi Instagram auditoriyasida qolib ketadi. Barqaror yangi mijoz oqimi yo‘q.
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-taupe text-[11px] italic text-espresso-muted bg-cream-surface/60 p-2 rounded-lg">
+              «Faqat mahallamizdagilar oladi, boshqalar bilmaydi ham...»
+            </div>
+          </div>
+
+          <div class="p-4 sm:p-5 rounded-2xl bg-cream border border-taupe flex flex-col justify-between shadow-xs">
+            <div>
+              <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center mb-3">
+                <i data-lucide="calculator" class="w-5 h-5"></i>
+              </div>
+              <h3 class="text-base font-bold text-espresso mb-1.5">2. Tannarx va hisob noaniq</h3>
+              <p class="text-xs text-espresso-muted leading-relaxed">
+                Go‘sht, un, qadoqlash, gaz va o‘z qo‘l mehnati hisoblanmaydi. Natijada ko‘pchilik bilmasdan tannarxidan pastga yoki zararga sotadi.
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-taupe text-[11px] italic text-espresso-muted bg-cream-surface/60 p-2 rounded-lg">
+              «Narxni boshqalarga qarab shunchaki taxminan qo‘yaman...»
+            </div>
+          </div>
+
+          <div class="p-4 sm:p-5 rounded-2xl bg-cream border border-taupe flex flex-col justify-between shadow-xs">
+            <div>
+              <div class="w-10 h-10 rounded-xl bg-orange-100 text-terracotta flex items-center justify-center mb-3">
+                <i data-lucide="message-square-off" class="w-5 h-5"></i>
+              </div>
+              <h3 class="text-base font-bold text-espresso mb-1.5">3. Guruhlardagi tartibsizlik</h3>
+              <p class="text-xs text-espresso-muted leading-relaxed">
+                Telegram guruhlardagi yuzlab xabarlar orasida buyurtmalar yo‘qoladi. "Narxi qancha?" degan savolga kuniga o‘nlab marta qo‘lda yoziladi.
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-taupe text-[11px] italic text-espresso-muted bg-cream-surface/60 p-2 rounded-lg">
+              «Chatlarda buyurtma qolib ketib, mijoz xafa bo‘ldi...»
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-auto p-3 rounded-xl bg-red-50 border border-red-200/80 flex items-center justify-between text-xs">
+          <div class="flex items-center space-x-2">
+            <span class="px-2 py-0.5 rounded bg-red-600 text-white font-bold text-[10px] uppercase">Xulosa</span>
+            <span class="text-espresso font-medium">Bu shunchaki "vitamin" emas — bu har kuni ularning pul va vaqtini o‘g‘irlayotgan real og‘riq (Painkiller).</span>
+          </div>
+          <span class="text-terracotta font-bold text-[11px] hidden sm:inline">20+ respondent tasdig‘i</span>
+        </div>
+      </section>
+
+      <!-- ================= SLIDE 3: THE SOLUTION ================= -->
+      <section class="slide-card bg-cream" data-slide="3" data-title="The Solution">
+        <div class="flex items-center justify-between mb-3">
+          <div class="inline-flex items-center space-x-2">
+            <span class="text-xs uppercase tracking-wider text-terracotta font-extrabold">02 • Yechim</span>
+            <span class="text-taupe-dark">|</span>
+            <span class="text-xs text-espresso-muted">Ikki Tomonlama Platforma</span>
+          </div>
+          <span class="text-xs font-mono font-bold text-terracotta">03 / 10</span>
+        </div>
+
+        <div class="mb-4">
+          <h2 class="text-2xl sm:text-4xl font-extrabold text-espresso font-serif tracking-tight">
+            Bitta platforma — ikki tomonlama raqamli yechim.
+          </h2>
+          <p class="text-espresso-muted text-xs sm:text-sm mt-1">
+            Locally uy ishlab chiqaruvchilarini to‘liq raqamlashtiradi va xaridorlarga ishonchli vitrina yaratadi.
+          </p>
+        </div>
+
+        <!-- 2 Sided Solution Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 my-auto">
+          <!-- Sotuvchilar uchun -->
+          <div class="p-6 rounded-3xl bg-cream-surface border-2 border-taupe flex flex-col justify-between shadow-xs">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="px-3 py-1 rounded-full bg-terracotta/10 text-terracotta text-xs font-bold uppercase tracking-wider">
+                  Sotuvchilar uchun (Pazandalar & Hunarmandlar)
+                </span>
+                <i data-lucide="store" class="w-5 h-5 text-terracotta"></i>
+              </div>
+              <h3 class="text-xl font-bold text-espresso mb-3">2 daqiqada onlayn do‘kon & hisobchi</h3>
+              
+              <ul class="space-y-3 text-xs sm:text-sm text-espresso-muted">
+                <li class="flex items-start">
+                  <i data-lucide="check-circle-2" class="w-4 h-4 text-terracotta mr-2.5 shrink-0 mt-0.5"></i>
+                  <span><strong>Tezkor Vitrina:</strong> Rasm, tavsif va narxni Telegramdan chiqmasdan bepul joylashtirish.</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="check-circle-2" class="w-4 h-4 text-terracotta mr-2.5 shrink-0 mt-0.5"></i>
+                  <span><strong>Smart Kalkulyator:</strong> Go‘sht, un, yog‘ va qadoq xarajatidan kelib chiqib tavsiya etilgan foydali narxni hisoblash.</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="check-circle-2" class="w-4 h-4 text-terracotta mr-2.5 shrink-0 mt-0.5"></i>
+                  <span><strong>Sotuv Paneli:</strong> Kunlik tushum, eng ko‘p sotilgan taom va real sof foyda hisoboti.</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="mt-5 pt-3 border-t border-taupe flex items-center justify-between text-xs">
+              <span class="text-espresso-muted">Kirish to‘sig‘i:</span>
+              <span class="text-terracotta font-extrabold">0 so‘m boshlang‘ich to‘lov</span>
+            </div>
+          </div>
+
+          <!-- Xaridorlar uchun -->
+          <div class="p-6 rounded-3xl bg-cream-surface border-2 border-taupe flex flex-col justify-between shadow-xs">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="px-3 py-1 rounded-full bg-espresso/10 text-espresso text-xs font-bold uppercase tracking-wider">
+                  Xaridorlar uchun (30M+ Foydalanuvchilar)
+                </span>
+                <i data-lucide="shopping-bag" class="w-5 h-5 text-espresso"></i>
+              </div>
+              <h3 class="text-xl font-bold text-espresso mb-3">Issiq taomlar va milliy buyumlar</h3>
+              
+              <ul class="space-y-3 text-xs sm:text-sm text-espresso-muted">
+                <li class="flex items-start">
+                  <i data-lucide="check-circle-2" class="w-4 h-4 text-espresso mr-2.5 shrink-0 mt-0.5"></i>
+                  <span><strong>0 MB O‘rnatish:</strong> App Store yoki Play Marketdan ilova qidirib xotira to‘ldirish shart emas.</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="check-circle-2" class="w-4 h-4 text-espresso mr-2.5 shrink-0 mt-0.5"></i>
+                  <span><strong>To‘g‘ridan-to‘g‘ri Muloqot:</strong> Oshpaz yoki usta bilan Telegram chatida bevosita kelishish.</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="check-circle-2" class="w-4 h-4 text-espresso mr-2.5 shrink-0 mt-0.5"></i>
+                  <span><strong>Shaffoflik & Ishonch:</strong> Real reytinglar, xaridorlar sharhlari va xavfsiz to‘lov tizimi.</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="mt-5 pt-3 border-t border-taupe flex items-center justify-between text-xs">
+              <span class="text-espresso-muted">Xarid tajribasi:</span>
+              <span class="text-espresso font-extrabold">3 qadamda buyurtma berish</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-auto pt-2 flex items-center justify-between text-xs text-espresso-muted border-t border-taupe/60">
+          <span>Natija: Uy bizneslari sotuvini 3 barobarga oshirish</span>
+          <span class="text-terracotta font-semibold">«Uydagi oshxonadan — barqaror biznes sari»</span>
+        </div>
+      </section>
+
+      <!-- ================= SLIDE 4: WHY NOW ================= -->
+      <section class="slide-card bg-cream-surface" data-slide="4" data-title="Why Now?">
+        <div class="flex items-center justify-between mb-3">
+          <div class="inline-flex items-center space-x-2">
+            <span class="text-xs uppercase tracking-wider text-terracotta font-extrabold">03 • Nega Hozir?</span>
+            <span class="text-taupe-dark">|</span>
+            <span class="text-xs text-espresso-muted">Bozor Trendlari & Tayyorlik</span>
+          </div>
+          <span class="text-xs font-mono font-bold text-terracotta">04 / 10</span>
+        </div>
+
+        <div class="mb-4">
+          <h2 class="text-2xl sm:text-4xl font-extrabold text-espresso font-serif tracking-tight">
+            Bozor nega aynan 2026-yilda tayyor?
+          </h2>
+          <p class="text-espresso-muted text-xs sm:text-sm mt-1">
+            Uchta ulkan to‘lqin ayni paytda to‘qnash keldi va Locally uchun ideal fursat oynasini ochdi.
+          </p>
+        </div>
+
+        <!-- 3 Why Now Pillars -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 my-auto">
+          <div class="p-6 rounded-3xl bg-cream border border-taupe shadow-xs flex flex-col justify-between">
+            <div>
+              <span class="text-3xl font-extrabold text-terracotta font-serif block mb-2">01</span>
+              <h3 class="text-lg font-bold text-espresso mb-2">Telegram Ekotizimi Inqilobi</h3>
+              <p class="text-xs sm:text-sm text-espresso-muted leading-relaxed">
+                O‘zbekistonda 30M+ faol Telegram foydalanuvchisi bor. Mini App texnologiyasi messenjerni to‘laqonli mobil operatsion tizimga aylantirdi. Foydalanuvchilarni yangi ilova yuklashga majburlash endi kerak emas.
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-taupe text-[11px] font-bold text-espresso">
+              Foydalanuvchi qamrovi: Aholining 80%+
+            </div>
+          </div>
+
+          <div class="p-6 rounded-3xl bg-cream border border-taupe shadow-xs flex flex-col justify-between">
+            <div>
+              <span class="text-3xl font-extrabold text-terracotta font-serif block mb-2">02</span>
+              <h3 class="text-lg font-bold text-espresso mb-2">Raqamli To‘lov Ishonchi</h3>
+              <p class="text-xs sm:text-sm text-espresso-muted leading-relaxed">
+                Click, Payme va Uzum kartalar orqali aholining 90% dan ortig‘i har kuni onlayn to‘lovga to‘liq o‘rgandi. Naqdsiz hisob-kitob qilish barcha yosh guruhlari uchun oddiy kundalik odatga aylandi.
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-taupe text-[11px] font-bold text-espresso">
+              Fintech qamrovi: To‘liq shakllangan
+            </div>
+          </div>
+
+          <div class="p-6 rounded-3xl bg-cream border border-taupe shadow-xs flex flex-col justify-between">
+            <div>
+              <span class="text-3xl font-extrabold text-terracotta font-serif block mb-2">03</span>
+              <h3 class="text-lg font-bold text-espresso mb-2">Bozordagi Katta Bo‘shliq</h3>
+              <p class="text-xs sm:text-sm text-espresso-muted leading-relaxed">
+                Uzum va Yandex Eats faqat yirik rasmiy restoranlar va zavod tovarlari bilan band. Xonadonlarda tayyorlanadigan samimiy taomlar va milliy hunarmandchilik segmenti butunlay e’tibordan chetda.
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-taupe text-[11px] font-bold text-terracotta">
+              Raqobat holati: To‘liq bo‘sh bozor (Blue Ocean)
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-auto pt-2 flex items-center justify-between text-xs text-espresso-muted border-t border-taupe/60">
+          <span>«To‘g‘ri vaqt — muvaffaqiyatning 42% kaliti» (Bill Gross tadqiqoti)</span>
+          <span class="text-espresso font-semibold">2026 = Telegram Mini App'larning oltin davri</span>
+        </div>
+      </section>
+
+      <!-- ================= SLIDE 5: INTERACTIVE DEMO (5 TA REAL SKRINSHOT) ================= -->
+      <section class="slide-card bg-cream" data-slide="5" data-title="Interactive Demo">
+        <div class="flex items-center justify-between mb-2">
+          <div class="inline-flex items-center space-x-2">
+            <span class="text-xs uppercase tracking-wider text-terracotta font-extrabold">04 • Mahsulot Namoyishi</span>
+            <span class="text-taupe-dark">|</span>
+            <span class="text-xs text-espresso-muted">Haqiqiy Telegram Mini App Skrinshotlari</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <a href="https://t.me/locally_marketplace_bot" target="_blank" class="inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full bg-terracotta/10 text-terracotta text-[11px] font-bold hover:bg-terracotta hover:text-white transition">
+              <i data-lucide="send" class="w-3 h-3"></i>
+              <span>@locally_marketplace_bot</span>
+            </a>
+            <span class="text-xs font-mono font-bold text-terracotta">05 / 10</span>
+          </div>
+        </div>
+
+        <div class="mb-2">
+          <h2 class="text-xl sm:text-3xl font-extrabold text-espresso font-serif tracking-tight">
+            Telegram ichidagi haqiqiy foydalanuvchi yo‘li (User Journey)
+          </h2>
+          <p class="text-espresso-muted text-xs mt-0.5">
+            React va Tailwind CSS arxitekturasida yaratilgan to‘liq ishchi Mini App: kirishdan boshlab to‘lovgacha 5 ta bosqich.
+          </p>
+        </div>
+
+        <!-- 5 Mobile App Mockups (Screenshots) -->
+        <div class="grid grid-cols-5 gap-2.5 sm:gap-3.5 my-auto items-stretch">
+          
+          <!-- Screen 1: Onboarding -->
+          <div class="phone-mockup flex flex-col bg-white rounded-2xl border border-taupe p-1.5 shadow-sm text-center">
+            <div class="relative w-full aspect-[9/18.5] bg-espresso rounded-xl overflow-hidden mb-1.5 border border-taupe-dark">
+              <img src="photo_2026-11-06_14-08-39.jpg" alt="1. Kirish & Onboarding" class="w-full h-full object-cover object-top" />
+              <div class="absolute top-1 left-1 bg-black/60 text-white text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-full backdrop-blur-xs">
+                1
+              </div>
+            </div>
+            <div class="mt-auto">
+              <b class="text-[11px] text-espresso block font-bold leading-tight">1. Kirish & Profil</b>
+              <span class="text-[9px] text-espresso-muted block mt-0.5 leading-tight">0 MB o‘rnatish, Telegram login</span>
+            </div>
+          </div>
+
+          <!-- Screen 2: Categories -->
+          <div class="phone-mockup flex flex-col bg-white rounded-2xl border border-taupe p-1.5 shadow-sm text-center">
+            <div class="relative w-full aspect-[9/18.5] bg-espresso rounded-xl overflow-hidden mb-1.5 border border-taupe-dark">
+              <img src="photo_2026-11-06_14-08-49.jpg" alt="Mahsulot toifalari" class="w-full h-full object-cover object-top" />
+              <div class="absolute top-1 left-1 bg-black/60 text-white text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-full backdrop-blur-xs">
+                2
+              </div>
+            </div>
+            <div class="mt-auto">
+              <b class="text-[11px] text-espresso block font-bold leading-tight">2. Toifalar</b>
+              <span class="text-[9px] text-espresso-muted block mt-0.5 leading-tight">Taomlar, Shirinlik, Handmade</span>
+            </div>
+          </div>
+
+          <!-- Screen 3: Showcase -->
+          <div class="phone-mockup flex flex-col bg-white rounded-2xl border-2 border-terracotta/40 p-1.5 shadow-md text-center bg-terracotta-light/30">
+            <div class="relative w-full aspect-[9/18.5] bg-espresso rounded-xl overflow-hidden mb-1.5 border border-taupe-dark">
+              <img src="photo_2026-11-06_14-08-53.jpg" alt="Saralangan vitrina" class="w-full h-full object-cover object-top" />
+              <div class="absolute top-1 left-1 bg-terracotta text-white text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-full">
+                3
+              </div>
+            </div>
+            <div class="mt-auto">
+              <b class="text-[11px] text-terracotta block font-bold leading-tight">3. Saralangan Vitrina</b>
+              <span class="text-[9px] text-espresso-muted block mt-0.5 leading-tight">Chatqol asali, Tandir somsa</span>
+            </div>
+          </div>
+
+          <!-- Screen 4: Product & Cart -->
+          <div class="phone-mockup flex flex-col bg-white rounded-2xl border border-taupe p-1.5 shadow-sm text-center">
+            <div class="relative w-full aspect-[9/18.5] bg-espresso rounded-xl overflow-hidden mb-1.5 border border-taupe-dark">
+              <img src="photo_2026-11-06_14-08-56.jpg" alt="Mahsulot kartochkasi & savatcha" class="w-full h-full object-cover object-top" />
+              <div class="absolute top-1 left-1 bg-black/60 text-white text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-full backdrop-blur-xs">
+                4
+              </div>
+            </div>
+            <div class="mt-auto">
+              <b class="text-[11px] text-espresso block font-bold leading-tight">4. Savatcha & Haptic</b>
+              <span class="text-[9px] text-espresso-muted block mt-0.5 leading-tight">Bitta bosishda hisoblash</span>
+            </div>
+          </div>
+
+          <!-- Screen 5: Checkout -->
+          <div class="phone-mockup flex flex-col bg-white rounded-2xl border border-taupe p-1.5 shadow-sm text-center">
+            <div class="relative w-full aspect-[9/18.5] bg-espresso rounded-xl overflow-hidden mb-1.5 border border-taupe-dark">
+              <img src="photo_2026-11-06_14-09-00.jpg" alt="Kassa & to'lov" class="w-full h-full object-cover object-top" />
+              <div class="absolute top-1 left-1 bg-black/60 text-white text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-full backdrop-blur-xs">
+                5
+              </div>
+            </div>
+            <div class="mt-auto">
+              <b class="text-[11px] text-espresso block font-bold leading-tight">5. Kassa & Tasdiq</b>
+              <span class="text-[9px] text-espresso-muted block mt-0.5 leading-tight">Telegram Pay, Click, Payme</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="mt-auto pt-2 flex items-center justify-between text-xs text-espresso-muted border-t border-taupe/60">
+          <div class="flex items-center space-x-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span>Haqiqiy Telegram Mini App UI • Skrinshotlar Cloudflare Workers ishlab turgan versiyasidan</span>
+          </div>
+          <a href="https://t.me/locally_marketplace_bot" target="_blank" class="text-terracotta font-bold hover:underline flex items-center gap-1">
+            <span>Botda sinab ko‘ring: t.me/locally_marketplace_bot</span>
+            <i data-lucide="arrow-right" class="w-3 h-3"></i>
+          </a>
+        </div>
+      </section>
+
+      <!-- ================= SLIDE 6: MARKET SIZE ================= -->
+      <section class="slide-card bg-cream-surface" data-slide="6" data-title="Market Size">
+        <div class="flex items-center justify-between mb-3">
+          <div class="inline-flex items-center space-x-2">
+            <span class="text-xs uppercase tracking-wider text-terracotta font-extrabold">05 • Bozor Hajmi</span>
+            <span class="text-taupe-dark">|</span>
+            <span class="text-xs text-espresso-muted">TAM • SAM • SOM Tahlili</span>
+          </div>
+          <span class="text-xs font-mono font-bold text-terracotta">06 / 10</span>
+        </div>
+
+        <div class="mb-4">
+          <h2 class="text-2xl sm:text-4xl font-extrabold text-espresso font-serif tracking-tight">
+            Bozor salohiyati: TAM • SAM • SOM
+          </h2>
+          <p class="text-espresso-muted text-xs sm:text-sm mt-1">
+            Trade.gov va O‘zbekiston elektron tijorat rasmiy ma’lumotlari asosida hisoblangan hajm.
+          </p>
+        </div>
+
+        <!-- 3 Tier Market Sizing Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 my-auto">
+          
+          <!-- TAM -->
+          <div class="p-6 rounded-3xl bg-cream border border-taupe shadow-xs flex flex-col justify-between">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wider text-espresso-muted block mb-1">TAM (Umumiy Bozor)</span>
+              <span class="text-4xl sm:text-5xl font-extrabold text-espresso font-serif block">$1.2 mlrd</span>
+              <p class="text-xs sm:text-sm text-espresso-muted mt-3 leading-relaxed">
+                O‘zbekiston elektron tijorat (e-commerce) bozorining 2026-yilgi umumiy baholangan hajmi.
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-taupe text-[11px] text-espresso-muted font-medium">
+              Manba: Trade.gov & Milliy E-commerce hisoboti
+            </div>
+          </div>
+
+          <!-- SAM -->
+          <div class="p-6 rounded-3xl bg-terracotta-light border-2 border-terracotta/40 shadow-xs flex flex-col justify-between relative overflow-hidden">
+            <div class="absolute -right-4 -bottom-4 w-24 h-24 rounded-full bg-terracotta/10 pointer-events-none"></div>
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wider text-terracotta block mb-1">SAM (Mavjud Bozor)</span>
+              <span class="text-4xl sm:text-5xl font-extrabold text-terracotta font-serif block">$120 mln</span>
+              <p class="text-xs sm:text-sm text-espresso-muted mt-3 leading-relaxed">
+                TAMning 10% ulushi: Uy taomlari, shirinliklar, pishiriqlar va mahalliy handmade hunarmandchilik segmenti.
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-terracotta/20 text-[11px] text-terracotta font-bold">
+              Ijtimoiy tarmoqlar va messenjerlardagi noformal savdo
+            </div>
+          </div>
+
+          <!-- SOM -->
+          <div class="p-6 rounded-3xl bg-cream border border-taupe shadow-xs flex flex-col justify-between">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wider text-espresso block mb-1">SOM (3 Yillik Maqsad)</span>
+              <span class="text-4xl sm:text-5xl font-extrabold text-espresso font-serif block">$7.2 mln</span>
+              <p class="text-xs sm:text-sm text-espresso-muted mt-3 leading-relaxed">
+                Locally loyihasining dastlabki 3 yil ichida egallashni rejalashtirgan maqsadli yillik savdo aylanmasi (GMV).
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-taupe text-[11px] text-espresso-muted font-medium">
+              SAM bozorining 6% ulushini qamrab olish prognozi
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-auto pt-2 flex items-center justify-between text-xs text-espresso-muted border-t border-taupe/60">
+          <span>O‘rtacha savatcha cheki: <strong>85 000 so‘m (~$6.8)</strong></span>
+          <span class="text-espresso font-semibold">Takroriy xaridlar chastotasi: oyiga 3-4 marta</span>
+        </div>
+      </section>
+
+      <!-- ================= SLIDE 7: BUSINESS MODEL ================= -->
+      <section class="slide-card bg-cream" data-slide="7" data-title="Business Model">
+        <div class="flex items-center justify-between mb-3">
+          <div class="inline-flex items-center space-x-2">
+            <span class="text-xs uppercase tracking-wider text-terracotta font-extrabold">06 • Biznes Model</span>
+            <span class="text-taupe-dark">|</span>
+            <span class="text-xs text-espresso-muted">B2C & B2B Monetizatsiya</span>
+          </div>
+          <span class="text-xs font-mono font-bold text-terracotta">07 / 10</span>
+        </div>
+
+        <div class="mb-4">
+          <h2 class="text-2xl sm:text-4xl font-extrabold text-espresso font-serif tracking-tight">
+            B2C va B2B Daromad Oqimlari
+          </h2>
+          <p class="text-espresso-muted text-xs sm:text-sm mt-1">
+            Daromad bir nechta mustaqil manbalardan shakllanadi. Boshlang‘ich to‘siq yo‘q — faqat savdo muvaffaqiyatidan komissiya.
+          </p>
+        </div>
+
+        <!-- 2 Model Streams -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 my-auto">
+          <!-- B2C Card -->
+          <div class="p-6 rounded-3xl bg-cream-surface border border-taupe shadow-xs flex flex-col justify-between">
+            <div>
+              <div class="flex items-center space-x-3 mb-3">
+                <div class="w-10 h-10 rounded-xl bg-terracotta/10 text-terracotta flex items-center justify-center font-bold text-xs">
+                  B2C
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold text-espresso">Biznesdan Xaridorga</h3>
+                  <span class="text-[11px] text-espresso-muted">Telegram foydalanuvchilarining buyurtmalari</span>
+                </div>
+              </div>
+
+              <ul class="space-y-3 text-xs sm:text-sm text-espresso-muted">
+                <li class="flex items-start">
+                  <i data-lucide="check" class="w-4 h-4 text-terracotta mr-2 shrink-0 mt-0.5"></i>
+                  <span><strong>10% Savdo Komissiyasi:</strong> Har bir muvaffaqiyatli buyurtmadan olinadi (sotuvchiga oylik abonent to‘lovi yo‘q).</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="check" class="w-4 h-4 text-terracotta mr-2 shrink-0 mt-0.5"></i>
+                  <span><strong>Vitrina Reklamasi:</strong> Sotuvchilar o‘z mahsulotini Mini App bosh sahifasida tavsiyaga chiqarishi uchun mikro-to‘lovlar.</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="check" class="w-4 h-4 text-terracotta mr-2 shrink-0 mt-0.5"></i>
+                  <span><strong>Yetkazib berish integratsiyasi:</strong> Mahalliy kurerlik xizmatlari bilan hamkorlik orqali yetkazish marjasi.</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-taupe text-[11px] text-terracotta font-bold">
+              Birlamchi lokomotiv: Kunlik minglab mikrosavdolar
+            </div>
+          </div>
+
+          <!-- B2B Card -->
+          <div class="p-6 rounded-3xl bg-cream-surface border border-taupe shadow-xs flex flex-col justify-between">
+            <div>
+              <div class="flex items-center space-x-3 mb-3">
+                <div class="w-10 h-10 rounded-xl bg-espresso/10 text-espresso flex items-center justify-center font-bold text-xs">
+                  B2B
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold text-espresso">Biznesdan Biznesga</h3>
+                  <span class="text-[11px] text-espresso-muted">Kafelar, do‘konlar va korxonalar</span>
+                </div>
+              </div>
+
+              <ul class="space-y-3 text-xs sm:text-sm text-espresso-muted">
+                <li class="flex items-start">
+                  <i data-lucide="check" class="w-4 h-4 text-espresso mr-2 shrink-0 mt-0.5"></i>
+                  <span><strong>Kafelarga ulgurji ta’minot:</strong> Tabiiy qandolat, asal va non mahsulotlarini kafelarga doimiy shartnomada yetkazish.</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="check" class="w-4 h-4 text-espresso mr-2 shrink-0 mt-0.5"></i>
+                  <span><strong>Premium Sotuvchi Paketi:</strong> Kengaytirilgan sotuv analitikasi, shaxsiy brend Telegram-bot va CRM funksiyalari.</span>
+                </li>
+                <li class="flex items-start">
+                  <i data-lucide="check" class="w-4 h-4 text-espresso mr-2 shrink-0 mt-0.5"></i>
+                  <span><strong>Korporativ Buyurtmalar:</strong> Tashkilotlar uchun milliy suvenirlar, bayramona sovg‘alar va korporativ katering.</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-taupe text-[11px] text-espresso font-bold">
+              Katta chekli segment: Doimiy B2B shartnomalar
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-auto pt-2 flex items-center justify-between text-xs text-espresso-muted border-t border-taupe/60">
+          <span>Prognoz qilingan LTV / CAC nisbati: <strong>&gt; 4.2x</strong></span>
+          <span class="text-terracotta font-semibold">Marjinallik darajasi: 70%+</span>
+        </div>
+      </section>
+
+      <!-- ================= SLIDE 8: COMPETITION MATRIX ================= -->
+      <section class="slide-card bg-cream-surface" data-slide="8" data-title="Competition Matrix">
+        <div class="flex items-center justify-between mb-2">
+          <div class="inline-flex items-center space-x-2">
+            <span class="text-xs uppercase tracking-wider text-terracotta font-extrabold">07 • Raqobatchilar</span>
+            <span class="text-taupe-dark">|</span>
+            <span class="text-xs text-espresso-muted">Taqqoslash Jadvali</span>
+          </div>
+          <span class="text-xs font-mono font-bold text-terracotta">08 / 10</span>
+        </div>
+
+        <div class="mb-3">
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-espresso font-serif tracking-tight">
+            Raqobatchilar bilan strategik taqqoslash
+          </h2>
+          <p class="text-espresso-muted text-xs sm:text-sm mt-0.5">
+            Nima uchun Locally ushbu segmentda yengilmas raqobatbardosh ustunlikka ega?
+          </p>
+        </div>
+
+        <!-- Comparison Table -->
+        <div class="overflow-x-auto rounded-2xl border border-taupe bg-white shadow-xs my-auto">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="bg-cream-surface border-b border-taupe font-bold text-espresso uppercase text-[10px]">
+                <th class="p-3 sm:p-3.5">Funksiyalar & Imkoniyatlar</th>
+                <th class="p-3 sm:p-3.5 text-center bg-terracotta-light text-terracotta font-black text-xs">Locally</th>
+                <th class="p-3 sm:p-3.5 text-center text-espresso-muted">Uzum Market</th>
+                <th class="p-3 sm:p-3.5 text-center text-espresso-muted">Yandex Eats</th>
+                <th class="p-3 sm:p-3.5 text-center text-espresso-muted">Telegram Guruhlar</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-taupe text-espresso">
+              <tr>
+                <td class="p-3 sm:p-3.5 font-semibold">Uy taomlari & handmade vitrinasi</td>
+                <td class="p-3 sm:p-3.5 text-center bg-terracotta-light/40 font-bold text-emerald-600">✅ Maxsus vitrina</td>
+                <td class="p-3 sm:p-3.5 text-center text-red-500">❌ Yo‘q</td>
+                <td class="p-3 sm:p-3.5 text-center text-red-500">❌ Yo‘q</td>
+                <td class="p-3 sm:p-3.5 text-center text-amber-500">⚠️ Tartibsiz</td>
+              </tr>
+              <tr>
+                <td class="p-3 sm:p-3.5 font-semibold">Smart tannarx kalkulyatori</td>
+                <td class="p-3 sm:p-3.5 text-center bg-terracotta-light/40 font-bold text-emerald-600">✅ Bor</td>
+                <td class="p-3 sm:p-3.5 text-center text-red-500">❌ Yo‘q</td>
+                <td class="p-3 sm:p-3.5 text-center text-red-500">❌ Yo‘q</td>
+                <td class="p-3 sm:p-3.5 text-center text-red-500">❌ Yo‘q</td>
+              </tr>
+              <tr>
+                <td class="p-3 sm:p-3.5 font-semibold">Telegram ichida 0 MB o‘rnatish</td>
+                <td class="p-3 sm:p-3.5 text-center bg-terracotta-light/40 font-bold text-emerald-600">✅ 0 MB Mini App</td>
+                <td class="p-3 sm:p-3.5 text-center text-red-500">❌ Alohida app</td>
+                <td class="p-3 sm:p-3.5 text-center text-red-500">❌ Alohida app</td>
+                <td class="p-3 sm:p-3.5 text-center text-emerald-600">✅ Telegram</td>
+              </tr>
+              <tr>
+                <td class="p-3 sm:p-3.5 font-semibold">Savdo va sof foyda analitikasi</td>
+                <td class="p-3 sm:p-3.5 text-center bg-terracotta-light/40 font-bold text-emerald-600">✅ Avtomatik hisob</td>
+                <td class="p-3 sm:p-3.5 text-center text-emerald-600">✅ Bor</td>
+                <td class="p-3 sm:p-3.5 text-center text-emerald-600">✅ Bor</td>
+                <td class="p-3 sm:p-3.5 text-center text-red-500">❌ 0% (Yo‘q)</td>
+              </tr>
+              <tr>
+                <td class="p-3 sm:p-3.5 font-semibold">Uy biznesiga moslashuv & komissiya</td>
+                <td class="p-3 sm:p-3.5 text-center bg-terracotta-light/40 font-bold text-emerald-600">✅ 0 so‘m kirish (10%)</td>
+                <td class="p-3 sm:p-3.5 text-center text-red-500">❌ Murakkab talablar</td>
+                <td class="p-3 sm:p-3.5 text-center text-red-500">❌ Faqat restoranlar</td>
+                <td class="p-3 sm:p-3.5 text-center text-amber-500">⚠️ Xaos va spam</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mt-auto pt-2 flex items-center justify-between text-xs text-espresso-muted border-t border-taupe/60">
+          <span>Xulosa: Gigantlar bilan to‘qnashmaymiz — ular kirmaydigan uy ishlab chiqaruvchilarini birlashtiramiz</span>
+          <span class="text-terracotta font-semibold">Unfair Advantage: Telegram Native UI</span>
+        </div>
+      </section>
+
+      <!-- ================= SLIDE 9: TRACTION & ROADMAP ================= -->
+      <section class="slide-card bg-cream" data-slide="9" data-title="Traction & Roadmap">
+        <div class="flex items-center justify-between mb-3">
+          <div class="inline-flex items-center space-x-2">
+            <span class="text-xs uppercase tracking-wider text-terracotta font-extrabold">08 • Rivojlanish</span>
+            <span class="text-taupe-dark">|</span>
+            <span class="text-xs text-espresso-muted">3 Yillik O‘sish Rejasi</span>
+          </div>
+          <span class="text-xs font-mono font-bold text-terracotta">09 / 10</span>
+        </div>
+
+        <div class="mb-4">
+          <h2 class="text-2xl sm:text-4xl font-extrabold text-espresso font-serif tracking-tight">
+            3 Yillik Strategik O‘sish Rejasi
+          </h2>
+          <p class="text-espresso-muted text-xs sm:text-sm mt-1">
+            MVP ishlab chiqildi va sinovdan o‘tkazildi. Maqsad — poytaxtdan mintaqaviy kengayish sari.
+          </p>
+        </div>
+
+        <!-- 3 Years Roadmap Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 my-auto">
+          <!-- Year 1 -->
+          <div class="p-6 rounded-3xl bg-cream-surface border-2 border-taupe flex flex-col justify-between shadow-xs">
+            <div>
+              <span class="px-3 py-1 rounded-full bg-taupe text-espresso font-bold text-xs uppercase tracking-wider">
+                1-Yil • Toshkent
+              </span>
+              <h3 class="text-xl font-bold text-espresso mt-3 mb-2">Poytaxt Bozorini Qamrab Olish</h3>
+              <p class="text-xs sm:text-sm text-espresso-muted mb-4 leading-relaxed">
+                Toshkentdagi eng sifatli 1000 ta uy oshpazi va qandolatchilarni jalb qilish hamda operatsion jarayonni silliqlash.
+              </p>
+            </div>
+            <div class="p-3 bg-white rounded-2xl border border-taupe/70 space-y-1.5 text-xs">
+              <div class="flex justify-between items-center">
+                <span class="text-espresso-muted">Sotuvchilar:</span>
+                <b class="text-terracotta text-sm">1 000 ta</b>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-espresso-muted">Xaridorlar:</span>
+                <b class="text-espresso text-sm">10 000 ta</b>
+              </div>
+            </div>
+          </div>
+
+          <!-- Year 2 -->
+          <div class="p-6 rounded-3xl bg-terracotta-light border-2 border-terracotta/40 flex flex-col justify-between shadow-xs relative">
+            <span class="absolute top-4 right-4 text-[10px] bg-terracotta text-white font-bold px-2 py-0.5 rounded-full">
+              Kengayish
+            </span>
+            <div>
+              <span class="px-3 py-1 rounded-full bg-terracotta text-white font-bold text-xs uppercase tracking-wider">
+                2-Yil • O‘zbekiston
+              </span>
+              <h3 class="text-xl font-bold text-espresso mt-3 mb-2">Viloyatlar Qamrovi</h3>
+              <p class="text-xs sm:text-sm text-espresso-muted mb-4 leading-relaxed">
+                Samarqand, Buxoro, Xiva va Farg‘ona vodiysi hunarmandlari va milliy suvenirlar savdosini platformaga ulash.
+              </p>
+            </div>
+            <div class="p-3 bg-white rounded-2xl border border-taupe/70 space-y-1.5 text-xs">
+              <div class="flex justify-between items-center">
+                <span class="text-espresso-muted">Sotuvchilar:</span>
+                <b class="text-terracotta text-sm">3 000 ta</b>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-espresso-muted">Xaridorlar:</span>
+                <b class="text-espresso text-sm">25 000 ta</b>
+              </div>
+            </div>
+          </div>
+
+          <!-- Year 3 -->
+          <div class="p-6 rounded-3xl bg-cream-surface border-2 border-taupe flex flex-col justify-between shadow-xs">
+            <div>
+              <span class="px-3 py-1 rounded-full bg-taupe text-espresso font-bold text-xs uppercase tracking-wider">
+                3-Yil • O‘rta Osiyo
+              </span>
+              <h3 class="text-xl font-bold text-espresso mt-3 mb-2">Mintaqaviy Eksport</h3>
+              <p class="text-xs sm:text-sm text-espresso-muted mb-4 leading-relaxed">
+                Qozog‘iston va Qirg‘iziston bozorlariga chiqish hamda xalqaro handmade eksporti yo‘lini ochish.
+              </p>
+            </div>
+            <div class="p-3 bg-white rounded-2xl border border-taupe/70 space-y-1.5 text-xs">
+              <div class="flex justify-between items-center">
+                <span class="text-espresso-muted">Sotuvchilar:</span>
+                <b class="text-terracotta text-sm">7 000 ta</b>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-espresso-muted">Foydalanuvchilar:</span>
+                <b class="text-espresso text-sm">100 000 ta</b>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-auto pt-2 flex items-center justify-between text-xs text-espresso-muted border-t border-taupe/60">
+          <span>Hozirgi holat: Mini App ishlab chiqilgan va dastlabki 10 ta usta bilan sinov boshlangan</span>
+          <span class="text-terracotta font-semibold">Toshkent → Respublika → Markaziy Osiyo</span>
+        </div>
+      </section>
+
+      <!-- ================= SLIDE 10: THE ASK & TEAM (YANGILANGAN 2 KISHILIK JAMOA) ================= -->
+      <section class="slide-card bg-cream-surface" data-slide="10" data-title="The Ask & Team">
+        <div class="flex items-center justify-between mb-2">
+          <div class="inline-flex items-center space-x-2">
+            <span class="text-xs uppercase tracking-wider text-terracotta font-extrabold">09 • Investitsiya & Jamoa</span>
+            <span class="text-taupe-dark">|</span>
+            <span class="text-xs text-espresso-muted">Sarmoya So‘rovi & Asoschilar</span>
+          </div>
+          <span class="text-xs font-mono font-bold text-terracotta">10 / 10</span>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 my-auto items-center">
+          
+          <!-- Left: The Ask ($50,000) -->
+          <div class="lg:col-span-6 space-y-3.5">
+            <div>
+              <span class="text-xs uppercase tracking-wider text-terracotta font-bold">Investitsiya So‘rovi</span>
+              <h2 class="text-2xl sm:text-4xl font-extrabold text-espresso font-serif tracking-tight mt-0.5">
+                $50,000 Seed Sarmoya
+              </h2>
+              <p class="text-espresso-muted text-xs mt-1">
+                12 oylik dastlabki faoliyat va 1-bosqich ko‘rsatkichlariga chiqish uchun smeta:
+              </p>
+            </div>
+
+            <div class="space-y-2">
+              <div class="p-3 rounded-2xl bg-cream border border-taupe flex items-center justify-between shadow-2xs">
+                <div>
+                  <b class="text-xs sm:text-sm text-espresso block">Jamoa & Platforma (70%)</b>
+                  <span class="text-[11px] text-espresso-muted">Frontend, Backend, Telegram WebApp & QA</span>
+                </div>
+                <span class="text-sm sm:text-base font-extrabold text-terracotta">$35,000</span>
+              </div>
+
+              <div class="p-3 rounded-2xl bg-cream border border-taupe flex items-center justify-between shadow-2xs">
+                <div>
+                  <b class="text-xs sm:text-sm text-espresso block">Maqsadli Marketing (20%)</b>
+                  <span class="text-[11px] text-espresso-muted">Reels, blogerlar va dastlabki 1000 sotuvchini jalb qilish</span>
+                </div>
+                <span class="text-sm sm:text-base font-extrabold text-espresso">$10,000</span>
+              </div>
+
+              <div class="p-3 rounded-2xl bg-cream border border-taupe flex items-center justify-between shadow-2xs">
+                <div>
+                  <b class="text-xs sm:text-sm text-espresso block">Operatsion xarajatlar (10%)</b>
+                  <span class="text-[11px] text-espresso-muted">Server infratuzilmasi, yuridik ro‘yxatdan o‘tish va servis</span>
+                </div>
+                <span class="text-sm sm:text-base font-extrabold text-espresso">$5,000</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: The Founders (2 Kishi: Jasmina & Asadbek) -->
+          <div class="lg:col-span-6 space-y-3.5">
+            <div>
+              <span class="text-xs uppercase tracking-wider text-terracotta font-bold">Ta’sischilar Jamoasi</span>
+              <h3 class="text-xl sm:text-2xl font-bold text-espresso font-serif mt-0.5">Asoschilar va Asosiy Boshqaruv</h3>
+            </div>
+
+            <!-- 2 Founders Profile Cards -->
+            <div class="grid grid-cols-2 gap-3.5">
+              
+              <!-- Founder 1: Jasmina Murxamiddinova -->
+              <div class="p-3.5 sm:p-4 rounded-2xl bg-cream border border-taupe text-center shadow-xs flex flex-col items-center">
+                <div class="relative w-16 h-16 rounded-full overflow-hidden border-2 border-terracotta shadow-md mb-2 bg-terracotta/10 flex items-center justify-center shrink-0">
+                  <img 
+                    src="photo_2026-11-06_14-34-38.jpg" 
+                    alt="Jasmina Murxamiddinova" 
+                    class="w-full h-full object-cover object-top" 
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                  />
+                  <!-- Safe Fallback Avatar -->
+                  <div class="w-full h-full bg-terracotta/20 text-terracotta font-black text-base items-center justify-center hidden">
+                    JM
+                  </div>
+                </div>
+                <h4 class="text-xs sm:text-sm font-bold text-espresso leading-tight">Jasmina Murxamiddinova</h4>
+                <span class="text-[11px] text-terracotta font-bold block mt-1">CEO & Founder</span>
+                <span class="text-[10px] text-espresso-muted block mt-1 leading-snug">Startap boshqaruvi, mahsulot strategiyasi va hamkorlik</span>
+              </div>
+
+              <!-- Founder 2: Asadbek O‘rolov -->
+              <div class="p-3.5 sm:p-4 rounded-2xl bg-cream border border-taupe text-center shadow-xs flex flex-col items-center">
+                <div class="relative w-16 h-16 rounded-full overflow-hidden border-2 border-terracotta shadow-md mb-2 bg-espresso/10 flex items-center justify-center shrink-0">
+                  <img 
+                    src="men.jpg" 
+                    alt="Asadbek O‘rolov" 
+                    class="w-full h-full object-cover object-top" 
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                  />
+                  <!-- Safe Fallback Avatar -->
+                  <div class="w-full h-full bg-espresso/20 text-espresso font-black text-base items-center justify-center hidden">
+                    AO
+                  </div>
+                </div>
+                <h4 class="text-xs sm:text-sm font-bold text-espresso leading-tight">Asadbek O‘rolov</h4>
+                <span class="text-[11px] text-terracotta font-bold block mt-1">CTO & Product Manager</span>
+                <span class="text-[10px] text-espresso-muted block mt-1 leading-snug">4 yil dasturlash, Full-Stack va Telegram Mini App arxitekturasi</span>
+              </div>
+
+            </div>
+
+            <!-- Official Bot CTA with QR Code -->
+            <div class="p-3 sm:p-3.5 rounded-2xl bg-terracotta text-white flex items-center justify-between gap-3 shadow-md shadow-terracotta/20">
+              <div class="flex items-center space-x-3">
+                <!-- QR Code Card -->
+                <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-white p-1.5 shadow-md border border-taupe shrink-0 flex items-center justify-center overflow-hidden">
+                  <img 
+                    src="@locally_marketplace_bot.png" 
+                    alt="Locally Bot QR Code" 
+                    class="w-full h-full object-contain"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                  />
+                  <div class="w-full h-full bg-cream text-terracotta flex items-center justify-center hidden text-[9px] font-bold text-center leading-tight">
+                    QR Kod
+                  </div>
+                </div>
+
+                <!-- Guidance Text -->
+                <div>
+                  <span class="text-[10px] sm:text-[11px] font-medium block opacity-95 leading-tight">
+                    Kamerani qarating va botni sinab ko‘ring:
+                  </span>
+                  <b class="text-xs sm:text-sm tracking-wide block text-white mt-0.5 font-bold">
+                    @locally_marketplace_bot
+                  </b>
+                  <span class="text-[9px] text-white/80 block mt-0.5 hidden sm:block">
+                    Telegram Mini App • 0 MB o‘rnatish
+                  </span>
+                </div>
+              </div>
+
+              <!-- Button -->
+              <a href="https://t.me/locally_marketplace_bot" target="_blank" class="px-3.5 py-2 rounded-xl bg-white text-terracotta font-black text-xs hover:bg-cream transition shadow-xs flex items-center space-x-1 shrink-0">
+                <span>Botga o‘tish</span>
+                <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-auto pt-2 flex items-center justify-between text-xs text-espresso-muted border-t border-taupe/60">
+          <span>E’tiboringiz uchun katta rahmat! Savollar bormi?</span>
+          <span class="text-terracotta font-bold">Locally — Mahalliy brendlar kelajagi</span>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ================= BOTTOM POWERPOINT-STYLE STATUS BAR ================= -->
+  <footer class="h-12 w-full bg-[#201815] border-t border-[#352924] px-4 flex items-center justify-between z-50 shrink-0 text-white text-xs select-none">
+    
+    <!-- Left: Slide Name and Deck Identity -->
+    <div class="flex items-center space-x-3">
+      <div class="flex items-center space-x-2 text-[#D8CCC4]">
+        <i data-lucide="presentation" class="w-4 h-4 text-terracotta"></i>
+        <span class="font-semibold text-white" id="slide-name-display">Title & Hook</span>
+      </div>
+      <span class="hidden md:inline text-[#6B5A51]">•</span>
+      <span class="hidden md:inline text-[11px] text-[#A8988D]">Locally Pitch Deck 2026</span>
+    </div>
+
+    <!-- Right: PPTX Prev / Next Controls & Quick Key Navigation -->
+    <div class="flex items-center space-x-2">
+      <!-- Previous Slide Button -->
+      <button id="prev-btn" class="flex items-center space-x-1.5 px-3 py-1 rounded-lg bg-[#2A1F1B] hover:bg-[#382B25] text-[#D8CCC4] hover:text-white border border-[#3D2E28] transition disabled:opacity-40 disabled:cursor-not-allowed">
+        <i data-lucide="chevron-left" class="w-4 h-4"></i>
+        <span class="hidden sm:inline font-medium">Oldingi</span>
+        <kbd class="text-[9px] bg-[#1a1310] px-1 py-0.5 rounded text-[#A09085] font-mono">←</kbd>
+      </button>
+
+      <!-- Slide Indicator Display -->
+      <div class="px-2.5 py-1 bg-[#17110F] rounded-lg border border-[#302521] text-[11px] font-mono font-bold text-white min-w-[55px] text-center">
+        <span id="bar-current-num">01</span> / 10
+      </div>
+
+      <!-- Next Slide Button -->
+      <button id="next-btn" class="flex items-center space-x-1.5 px-3 py-1 rounded-lg bg-terracotta hover:bg-terracotta-hover text-white font-semibold transition disabled:opacity-40 disabled:cursor-not-allowed shadow-sm">
+        <span class="hidden sm:inline">Keyingi</span>
+        <kbd class="text-[9px] bg-black/20 px-1 py-0.5 rounded text-white font-mono">→</kbd>
+        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+      </button>
+    </div>
+  </footer>
+
+  <!-- ================= SPEAKER NOTES DRAWER (N TUGMASI BILAN OCHILADI) ================= -->
+  <aside id="speaker-notes-drawer" class="fixed top-12 bottom-12 right-0 w-full sm:w-[400px] md:w-[440px] bg-[#201815] border-l border-[#352924] shadow-2xl z-40 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col text-white">
+    
+    <!-- Drawer Header -->
+    <div class="p-4 border-b border-[#352924] flex items-center justify-between bg-[#191210]">
+      <div class="flex items-center space-x-2">
+        <div class="w-7 h-7 rounded-lg bg-terracotta/20 text-terracotta flex items-center justify-center">
+          <i data-lucide="mic" class="w-4 h-4"></i>
+        </div>
+        <div>
+          <h4 class="font-bold text-sm text-white">Spiker Nutqi & Qaydlar</h4>
+          <span class="text-[10px] text-[#9E8E84]">20-25 soniyalik professional nutq matni</span>
+        </div>
+      </div>
+      <button id="close-notes-btn" class="p-1 rounded-lg hover:bg-[#352924] text-[#9E8E84] hover:text-white transition">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+    </div>
+
+    <!-- Drawer Content (Dynamically updated per slide) -->
+    <div class="flex-1 p-5 overflow-y-auto space-y-4 text-xs leading-relaxed text-[#D8CCC4]">
+      <!-- Slide Context Card -->
+      <div class="p-3 rounded-xl bg-[#17110F] border border-[#302521] flex items-center justify-between">
+        <div>
+          <span class="text-[10px] font-mono text-terracotta font-bold uppercase tracking-wider block" id="notes-slide-badge">Slayd 01</span>
+          <b class="text-sm text-white" id="notes-slide-title">Title & Hook</b>
+        </div>
+        <span class="px-2 py-0.5 rounded bg-terracotta/20 text-terracotta text-[10px] font-mono font-bold" id="notes-time-target">~25 sek</span>
+      </div>
+
+      <!-- Verbal Pitch Script -->
+      <div>
+        <span class="text-[11px] font-bold text-white uppercase tracking-wider block mb-1.5 flex items-center gap-1.5">
+          <i data-lucide="message-square" class="w-3.5 h-3.5 text-terracotta"></i>
+          Spiker Nutqi (So‘zma-so‘z nima aytiladi):
+        </span>
+        <div id="notes-speech-text" class="p-3.5 rounded-xl bg-[#281E1A] border border-[#3F2F28] text-[#F0EAE5] text-xs sm:text-sm leading-relaxed whitespace-pre-line font-normal">
+          <!-- Text loaded from JS -->
+        </div>
+      </div>
+
+      <!-- Coach / Investor Tips -->
+      <div>
+        <span class="text-[11px] font-bold text-white uppercase tracking-wider block mb-1.5 flex items-center gap-1.5">
+          <i data-lucide="lightbulb" class="w-3.5 h-3.5 text-amber-400"></i>
+          Investor Psixologiyasi & Urg‘u:
+        </span>
+        <div id="notes-tips-text" class="p-3 rounded-xl bg-[#1D1714] border border-[#302521] text-[#BFAFA5] text-[11px] leading-relaxed">
+          <!-- Tips loaded from JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Drawer Footer -->
+    <div class="p-3 border-t border-[#352924] bg-[#191210] flex items-center justify-between text-[11px] text-[#8F7E75]">
+      <span>Yopish uchun: <kbd class="px-1.5 py-0.5 rounded bg-[#2D211C] text-white font-mono">N</kbd> yoki <kbd class="px-1.5 py-0.5 rounded bg-[#2D211C] text-white font-mono">Esc</kbd></span>
+      <span class="text-terracotta font-semibold">Pitch Mentor Rejimi</span>
+    </div>
+  </aside>
+
+  <!-- ================= KEYBOARD SHORTCUTS MODAL ================= -->
+  <div id="shortcuts-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-[#201815] border border-[#3D2E28] rounded-2xl max-w-sm w-full p-5 text-white shadow-2xl">
+      <div class="flex items-center justify-between mb-4 pb-2 border-b border-[#352924]">
+        <h4 class="font-bold text-sm flex items-center gap-2">
+          <i data-lucide="keyboard" class="w-4 h-4 text-terracotta"></i>
+          Klaviatura Boshqaruvi
+        </h4>
+        <button id="close-shortcuts-btn" class="text-[#8F7E75] hover:text-white">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <div class="space-y-2.5 text-xs text-[#D8CCC4]">
+        <div class="flex items-center justify-between py-1 border-b border-[#2C211C]">
+          <span>Keyingi slayd</span>
+          <div class="flex space-x-1">
+            <kbd class="px-1.5 py-0.5 rounded bg-[#2D211C] text-white font-mono">→</kbd>
+            <kbd class="px-1.5 py-0.5 rounded bg-[#2D211C] text-white font-mono">↓</kbd>
+            <kbd class="px-1.5 py-0.5 rounded bg-[#2D211C] text-white font-mono">Space</kbd>
+          </div>
+        </div>
+        <div class="flex items-center justify-between py-1 border-b border-[#2C211C]">
+          <span>Oldingi slayd</span>
+          <div class="flex space-x-1">
+            <kbd class="px-1.5 py-0.5 rounded bg-[#2D211C] text-white font-mono">←</kbd>
+            <kbd class="px-1.5 py-0.5 rounded bg-[#2D211C] text-white font-mono">↑</kbd>
+          </div>
+        </div>
+        <div class="flex items-center justify-between py-1 border-b border-[#2C211C]">
+          <span>To‘liq ekran (Fullscreen)</span>
+          <kbd class="px-1.5 py-0.5 rounded bg-[#2D211C] text-white font-mono">F</kbd>
+        </div>
+        <div class="flex items-center justify-between py-1 border-b border-[#2C211C]">
+          <span>Spiker nutqi paneli</span>
+          <kbd class="px-1.5 py-0.5 rounded bg-[#2D211C] text-white font-mono">N</kbd>
+        </div>
+        <div class="flex items-center justify-between py-1">
+          <span>Birinchi / Oxirgi slayd</span>
+          <div class="flex space-x-1">
+            <kbd class="px-1.5 py-0.5 rounded bg-[#2D211C] text-white font-mono">Home</kbd>
+            <kbd class="px-1.5 py-0.5 rounded bg-[#2D211C] text-white font-mono">End</kbd>
+          </div>
+        </div>
+      </div>
+
+      <button id="dismiss-shortcuts-btn" class="w-full mt-4 py-2 rounded-xl bg-terracotta text-white font-bold text-xs hover:bg-terracotta-hover transition">
+        Tushundim
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= JAVASCRIPT: ENGINE & PRESENTATION LOGIC ================= -->
+  <script>
+    // -------------------------------------------------------------
+    // 1. SPEAKER NOTES DATA (Yangilangan Jamoa va Bot havolalari bilan)
+    // -------------------------------------------------------------
+    const speakerNotesData = {
+      1: {
+        title: "Title & Hook",
+        targetTime: "20 soniya",
+        speech: "«Assalomu alaykum, hurmatli hakamlar va investorlar! Bizning loyihamiz — Locally. Bu O‘zbekistondagi 30 milliondan ortiq Telegram foydalanuvchilarini mahalliy oshpazlar, uy bekalari va hunarmandlar bilan 0 megabayt o‘rnatishsiz to‘g‘ridan-to‘g‘ri bog‘laydigan birinchi Mini App bozoridir. Rasmiy botimiz @locally_marketplace_bot orqali bugun biz uydagi oshxonalarni qanday qilib barqaror biznesga aylantirayotganimizni ko‘rsatamiz.»",
+        tips: "Urg‘uni 30M Telegram bazasiga, @locally_marketplace_bot ga va '0 MB o‘rnatish' qulayligiga qarating. Auditoriyaga bozorning samimiyligi va hajmiga bo‘lgan ishonchni dastlabki 10 soniyada singdiring."
+      },
+      2: {
+        title: "The Problem (Customer Discovery)",
+        targetTime: "25 soniya",
+        speech: "«Biz shunchaki taxmin qilmadik: 20 dan ortiq uy bekalari va qandolatchilar bilan 'Mom Test' suhbatlarini o‘tkazdik. Ularning barchasida mahsulot a’lo darajada, lekin uni sotish haqiqiy azob. Birinchidan, mijozlar faqat mahalla yoki tanish-bilishlar bilan cheklangan. Ikkinchidan, xomashyo va o‘z vaqtini hisoblamay, ko‘pincha zararga sotishadi. Uchinchidan, Telegram guruhlardagi betartiblikda buyurtmalar yo‘qolib ketadi. Bu vitamin emas — bu har kungi og‘riqli muammo!»",
+        tips: "Intervyulardan keltirilgan jonli iqtiboslarga («Faqat mahallamizdagilar oladi...») urg‘u bering. Investorlar muammoning o‘ylab topilmaganligiga ishonishi shart."
+      },
+      3: {
+        title: "The Solution (Bitta platforma)",
+        targetTime: "25 soniya",
+        speech: "«Locally ushbu muammoni bitta platformada ikki tomonlama hal qiladi. Sotuvchi ayollarimiz uchun 2 daqiqada vitrina ochish, xomashyoni kiritib foydani aniq chiqarib beruvchi Smart Kalkulyator va kunlik tushum hisoboti taqdim etiladi. Xaridorlar esa yangi dastur o‘rnatib o‘tirmasdan, Telegram ichida 3 ta bosqichda issiq milliy taom va qo‘l mehnati mahsulotlarini bevosita usta bilan muloqot qilgan holda xarid qilishadi.»",
+        tips: "Smart Kalkulyatorga alohida urg‘u bering — chunki bu uy bekalari uchun moliyaviy savodxonlik va aniq foyda asbobi bo‘lib xizmat qiladi."
+      },
+      4: {
+        title: "Why Now? (Nega aynan 2026?)",
+        targetTime: "25 soniya",
+        speech: "«Nega aynan hozir? Chunki 3 ta katta to‘lqin ayni paytda birlashdi: Birinchidan, Telegram O‘zbekistonda de-fakto operatsion tizimga aylandi va Mini App texnologiyasi yetildi. Ikkinchidan, aholining 90 foizdan ortig‘i Click, Payme va kartalar bilan onlayn to‘lashga to‘liq ko‘nikdi. Uchinchidan, Uzum va Yandex faqat yirik restoran va import tovarlar bilan band. Mahalliy uy taomlari va hunarmandchilik segmenti esa mutlaqo ochiq bo‘shliqdir!»",
+        tips: "Investorlar eng ko‘p so‘raydigan 'Why Now?' savoliga qat’iy javob bering. Bozordagi bo‘shliq (Blue Ocean) Locally foydasiga ishlayotganini ko‘rsating."
+      },
+      5: {
+        title: "Interactive Demo (Haqiqiy Mahsulot)",
+        targetTime: "30 soniya",
+        speech: "«Biz shunchaki nazariya bilan emas, ishlab turgan haqiqiy Telegram Mini App bilan keldik. Slaydda ko‘rib turganingizdek: 1-bosqichda foydalanuvchi Telegram hisobi bilan 0 MB o‘rnatishsiz kiradi, 2-bosqichda mahsulot toifalarini ko‘radi, 3-bosqichda saralangan tog‘ asali va issiq tandir somsalari vitrinasi ochiladi, 4-bosqichda savatchaga bitta bosishda haptic tebranish bilan qo‘shiladi va 5-bosqichda to‘lov amalga oshiriladi. Barchasi @locally_marketplace_bot orqali faol ishlab turibdi!»",
+        tips: "5 ta skrinshot orqali foydalanuvchi yo‘lining qanchalik sodda va tabiiy ekanligini ko‘rsating. Haptic tebranish va tezkorlikka urg‘u bering."
+      },
+      6: {
+        title: "Market Size (TAM SAM SOM)",
+        targetTime: "25 soniya",
+        speech: "«Bozor hajmiga kelsak: Trade.gov hisobotiga ko‘ra, O‘zbekiston elektron tijorati $1.2 milliard dollarga yetmoqda — bu bizning TAM. Uning 10 foizini tashkil etuvchi uy taomlari, shirinliklar va hunarmandchilik segmenti — bu $120 millionlik SAM. Dastlabki 3 yilda biz ushbu bozorning 6 foizini egallab, $7.2 million yillik savdo aylanmasiga (SOM) erishishni rejalashtirganmiz.»",
+        tips: "Raqamlarni aniq va ishonchli ayting. Hisob-kitoblar O‘zbekiston rasmiy e-commerce ko‘rsatkichlari bilan mutanosib ekanligini ta’kidlang."
+      },
+      7: {
+        title: "Business Model (Monetizatsiya)",
+        targetTime: "25 soniya",
+        speech: "«Biznes modelimiz juda sodda va adolatli. Sotuvchilardan oldindan hech qanday to‘lov olinmaydi. B2C yo‘nalishida har bir muvaffaqiyatli savdodan 10 foiz komissiya va tavsiya etilgan vitrina reklamalaridan daromad olamiz. B2B yo‘nalishida esa kafelarga tabiiy qandolat va non mahsulotlarini ulgurji yetkazib berish hamda korporativ sovg‘alar yetkazish orqali doimiy daromad oqimini yo‘lga qo‘yamiz.»",
+        tips: "0 so‘m boshlang‘ich to‘lov sotuvchilar uchun kirish to‘sig‘ini yo‘qqa chiqarishini va bu viral o‘sishga olib kelishini ta’kidlang."
+      },
+      8: {
+        title: "Competition Matrix (Raqobatchilar)",
+        targetTime: "25 soniya",
+        speech: "«Raqobatchilarimiz kim? Uzum va Yandex gigantlar, lekin ular uy ishlab chiqaruvchilarini qabul qilmaydi va alohida ilovani talab qiladi. Telegram guruhlar esa mutlaqo tartibsiz va u yerda hech qanday analitika yoki xavfsizlik yo‘q. Locally Telegram ichida qolib, uy bekalari uchun maxsus smart kalkulyator va vitrina beruvchi yagona tizimdir. Biz ularga raqib emasmiz, biz bozorning yangi qatlamini ochyapmiz.»",
+        tips: "«Nega gigantlar sizni yutib yubormaydi?» degan ehtimoliy savolga oldindan javob bering: Gigantlarning biznes-modeli standartlashtirilgan tovarlarga moslashgan."
+      },
+      9: {
+        title: "Traction & Roadmap (3 Yillik Reja)",
+        targetTime: "25 soniya",
+        speech: "«Bizning 3 yillik yo‘l xaritamiz: 1-yilda Toshkent bozoriga e’tibor qaratib, 1,000 ta saralangan oshpaz va 10,000 ta xaridorni birlashtiramiz. 2-yilda viloyatlarga — Samarqand, Buxoro va vodiy hunarmandlariga chiqamiz. 3-yilda esa 100,000 dan ortiq foydalanuvchi bilan Markaziy Osiyo va xalqaro handmade eksportiga yo‘l olamiz. Hozirda dastlabki MVP tayyor va test qilinmoqda.»",
+        tips: "Bosqichma-bosqich realistik o‘sish strategiyasini ko‘rsating. Toshkentdan boshlab unit-iqtisodiyotni tasdiqlash rejangiz investorni qanoatlantiradi."
+      },
+      10: {
+        title: "The Ask & Team (Investitsiya va Jamoa)",
+        targetTime: "30 soniya",
+        speech: "«1-bosqich maqsadlarimizga erishish va Toshkentda liderlikni qo‘lga kiritish uchun bizga $50,000 seed sarmoya kerak. Bu mablag‘ning 70 foizi texnologiya va jamoaga, 20 foizi marketingga, 10 foizi operatsiyalarga sarflanadi. Ta’sischilar jamoamizda CEO Jasmina — startaplar boshqaruvi va mahsulot strategiyasi bo‘yicha, men Asadbek — CTO va Product Manager sifatida 4 yillik dasturlash tajribam bilan ushbu Mini App platformasini to‘liq arxitekturasini qurdik. Rasmiy botimiz: @locally_marketplace_bot. E’tiboringiz uchun rahmat, savollaringizga mamnuniyat bilan javob beramiz!»",
+        tips: "Yakunda investitsiya smetasini va 2 kishilik asosiy jamoaning mahorati hamda texnik kuchini qat’iyat bilan ayting. Savollarga tayyor ekanligingizni bildirib, minnatdorchilik bildiring."
+      }
+    };
+
+    // -------------------------------------------------------------
+    // 2. STATE & ELEMENT REFERENCES
+    // -------------------------------------------------------------
+    let currentSlide = 1;
+    const totalSlides = 10;
+    const slides = document.querySelectorAll('.slide-card');
+    const dotsContainer = document.getElementById('dots-container');
+
+    const currentSlideNumEl = document.getElementById('current-slide-num');
+    const barCurrentNumEl = document.getElementById('bar-current-num');
+    const slideNameDisplayEl = document.getElementById('slide-name-display');
+
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+
+    // Drawer Elements
+    const notesDrawer = document.getElementById('speaker-notes-drawer');
+    const notesBtn = document.getElementById('notes-btn');
+    const closeNotesBtn = document.getElementById('close-notes-btn');
+    const notesSlideBadge = document.getElementById('notes-slide-badge');
+    const notesSlideTitle = document.getElementById('notes-slide-title');
+    const notesTimeTarget = document.getElementById('notes-time-target');
+    const notesSpeechText = document.getElementById('notes-speech-text');
+    const notesTipsText = document.getElementById('notes-tips-text');
+
+    // Fullscreen Elements
+    const fullscreenBtn = document.getElementById('fullscreen-btn');
+    const fsIcon = document.getElementById('fs-icon');
+
+    // Shortcuts Modal Elements
+    const shortcutsModal = document.getElementById('shortcuts-modal');
+    const closeShortcutsBtn = document.getElementById('close-shortcuts-btn');
+    const dismissShortcutsBtn = document.getElementById('dismiss-shortcuts-btn');
+
+    // -------------------------------------------------------------
+    // 3. GENERATE INTERACTIVE DOTS
+    // -------------------------------------------------------------
+    function initDots() {
+      dotsContainer.innerHTML = '';
+      for (let i = 1; i <= totalSlides; i++) {
+        const dot = document.createElement('button');
+        dot.className = `w-2.5 h-2.5 rounded-full transition-all duration-200 ${i === 1 ? 'bg-terracotta w-6' : 'bg-[#4A3B34] hover:bg-[#7D6B62]'}`;
+        dot.title = `Slayd ${i}: ${speakerNotesData[i]?.title || ''}`;
+        dot.addEventListener('click', () => goToSlide(i));
+        dotsContainer.appendChild(dot);
+      }
+    }
+
+    // -------------------------------------------------------------
+    // 4. SLIDE NAVIGATION LOGIC
+    // -------------------------------------------------------------
+    function updateSlideUI() {
+      // Toggle active slide
+      slides.forEach((slide) => {
+        const slideIndex = parseInt(slide.getAttribute('data-slide'));
+        if (slideIndex === currentSlide) {
+          slide.classList.add('active');
+        } else {
+          slide.classList.remove('active');
+        }
+      });
+
+      // Update Toolbar counters
+      currentSlideNumEl.textContent = currentSlide;
+      barCurrentNumEl.textContent = currentSlide < 10 ? `0${currentSlide}` : currentSlide;
+
+      // Update slide title
+      const currentTitle = speakerNotesData[currentSlide]?.title || `Slayd ${currentSlide}`;
+      slideNameDisplayEl.textContent = currentTitle;
+
+      // Update Dots
+      const dots = dotsContainer.querySelectorAll('button');
+      dots.forEach((dot, index) => {
+        const slideNum = index + 1;
+        if (slideNum === currentSlide) {
+          dot.className = 'w-5 h-2 rounded-full bg-terracotta transition-all duration-200';
+        } else {
+          dot.className = 'w-2 h-2 rounded-full bg-[#4A3B34] hover:bg-[#7D6B62] transition-all duration-200';
+        }
+      });
+
+      // Update Button states
+      prevBtn.disabled = currentSlide === 1;
+      nextBtn.disabled = currentSlide === totalSlides;
+
+      // Update Speaker Notes Drawer Content
+      updateSpeakerNotesUI();
+    }
+
+    function goToSlide(slideNum) {
+      if (slideNum < 1 || slideNum > totalSlides) return;
+      currentSlide = slideNum;
+      updateSlideUI();
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) {
+        currentSlide++;
+        updateSlideUI();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) {
+        currentSlide--;
+        updateSlideUI();
+      }
+    }
+
+    // -------------------------------------------------------------
+    // 5. SPEAKER NOTES DRAWER LOGIC
+    // -------------------------------------------------------------
+    function updateSpeakerNotesUI() {
+      const data = speakerNotesData[currentSlide];
+      if (!data) return;
+
+      notesSlideBadge.textContent = `Slayd ${currentSlide < 10 ? '0' + currentSlide : currentSlide} / 10`;
+      notesSlideTitle.textContent = data.title;
+      notesTimeTarget.textContent = `~${data.targetTime}`;
+      notesSpeechText.textContent = data.speech;
+      notesTipsText.textContent = data.tips;
+    }
+
+    function toggleSpeakerNotes() {
+      const isClosed = notesDrawer.classList.contains('translate-x-full');
+      if (isClosed) {
+        notesDrawer.classList.remove('translate-x-full');
+        notesBtn.classList.add('bg-[#382B25]', 'border-terracotta');
+      } else {
+        notesDrawer.classList.add('translate-x-full');
+        notesBtn.classList.remove('bg-[#382B25]', 'border-terracotta');
+      }
+    }
+
+    function closeSpeakerNotes() {
+      notesDrawer.classList.add('translate-x-full');
+      notesBtn.classList.remove('bg-[#382B25]', 'border-terracotta');
+    }
+
+    // -------------------------------------------------------------
+    // 6. FULLSCREEN CONTROLLER
+    // -------------------------------------------------------------
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch((err) => {
+          console.warn(`Fullscreen error: ${err.message}`);
+        });
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+
+    document.addEventListener('fullscreenchange', () => {
+      if (document.fullscreenElement) {
+        fsIcon.setAttribute('data-lucide', 'minimize');
+      } else {
+        fsIcon.setAttribute('data-lucide', 'maximize');
+      }
+      lucide.createIcons();
+    });
+
+    // -------------------------------------------------------------
+    // 7. KEYBOARD EVENT LISTENERS (PPTX / KEYNOTE STYLE)
+    // -------------------------------------------------------------
+    window.addEventListener('keydown', (e) => {
+      // Ignore if user is typing in an input
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+      switch (e.key) {
+        case 'ArrowRight':
+        case 'ArrowDown':
+        case ' ':
+        case 'PageDown':
+          e.preventDefault();
+          nextSlide();
+          break;
+
+        case 'ArrowLeft':
+        case 'ArrowUp':
+        case 'PageUp':
+          e.preventDefault();
+          prevSlide();
+          break;
+
+        case 'Home':
+          e.preventDefault();
+          goToSlide(1);
+          break;
+
+        case 'End':
+          e.preventDefault();
+          goToSlide(totalSlides);
+          break;
+
+        case 'f':
+        case 'F':
+          e.preventDefault();
+          toggleFullscreen();
+          break;
+
+        case 'n':
+        case 'N':
+          e.preventDefault();
+          toggleSpeakerNotes();
+          break;
+
+        case 'Escape':
+          closeSpeakerNotes();
+          shortcutsModal.classList.add('hidden');
+          break;
+
+        case '?':
+          shortcutsModal.classList.toggle('hidden');
+          break;
+      }
+    });
+
+    // -------------------------------------------------------------
+    // 8. LIVE PITCH TIMER ENGINE
+    // -------------------------------------------------------------
+    let timerSeconds = 0;
+    let timerInterval = null;
+    let isTimerRunning = true;
+    const timerDisplay = document.getElementById('timer-display');
+    const timerToggleBtn = document.getElementById('timer-toggle-btn');
+    const timerResetBtn = document.getElementById('timer-reset-btn');
+    const timerIcon = document.getElementById('timer-icon');
+
+    function formatTime(sec) {
+      const m = Math.floor(sec / 60);
+      const s = sec % 60;
+      return `${m < 10 ? '0' + m : m}:${s < 10 ? '0' + s : s}`;
+    }
+
+    function startTimer() {
+      if (timerInterval) clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        timerSeconds++;
+        timerDisplay.textContent = formatTime(timerSeconds);
+      }, 1000);
+      isTimerRunning = true;
+      timerIcon.setAttribute('data-lucide', 'pause');
+      lucide.createIcons();
+    }
+
+    function pauseTimer() {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      isTimerRunning = false;
+      timerIcon.setAttribute('data-lucide', 'play');
+      lucide.createIcons();
+    }
+
+    timerToggleBtn.addEventListener('click', () => {
+      if (isTimerRunning) {
+        pauseTimer();
+      } else {
+        startTimer();
+      }
+    });
+
+    timerResetBtn.addEventListener('click', () => {
+      timerSeconds = 0;
+      timerDisplay.textContent = '00:00';
+    });
+
+    // -------------------------------------------------------------
+    // 9. ATTACH CLICK LISTENERS & INITIALIZATION
+    // -------------------------------------------------------------
+    prevBtn.addEventListener('click', prevSlide);
+    nextBtn.addEventListener('click', nextSlide);
+    notesBtn.addEventListener('click', toggleSpeakerNotes);
+    closeNotesBtn.addEventListener('click', closeSpeakerNotes);
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+
+    closeShortcutsBtn.addEventListener('click', () => shortcutsModal.classList.add('hidden'));
+    dismissShortcutsBtn.addEventListener('click', () => shortcutsModal.classList.add('hidden'));
+
+    window.addEventListener('DOMContentLoaded', () => {
+      initDots();
+      updateSlideUI();
+      startTimer();
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
